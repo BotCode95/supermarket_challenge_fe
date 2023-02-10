@@ -1,0 +1,32 @@
+
+.container_flex{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.container_flex_column{
+flex-direction: column;
+}
+
+
+
+.product_container {
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 1rem;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    width: 70% !important;
+    background-color: aliceblue;
+}
+
+.prices_container{
+    padding: 1rem;
+}
+
+.cupon_container{
+    border: 2px solid;
+    border-radius: 2rem;
+    padding: 1rem;
+}
