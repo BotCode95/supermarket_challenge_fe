@@ -9,13 +9,17 @@ interface Props {
 export interface ProductsState {
 	products: Product[]
 	product: Product | null
+	cart: Product[]
 	message_error: string
+	subtotal: number
 }
 
 const Products_INITIAL_STATE: ProductsState = {
 	products: [],
+	cart: [],
 	product: null,
 	message_error: '',
+	subtotal: 0,
 }
 
 export const ProductsProvider: FC<Props> = ({ children }) => {
@@ -24,6 +28,7 @@ export const ProductsProvider: FC<Props> = ({ children }) => {
 	const getProductsByUser = async (idUser: string) => {
 		try {
 			const { data } = await api.get(`/products?idUser=${idUser}`)
+			console.log(data)
 
 			dispatch({
 				type: 'GET_PRODUCTS_BY_USER',
@@ -52,6 +57,31 @@ export const ProductsProvider: FC<Props> = ({ children }) => {
 			payload: message,
 		})
 	}
+
+	const setSubtotal = (value: number) => {
+		dispatch({
+			type: 'SET_SUBTOTAL',
+			payload: value,
+		})
+	}
+
+	const shoppingCart = (product: Product) => {
+		if (state.cart.some((productFilter) => productFilter._id === product._id)) {
+			dispatch({
+				type: 'UPDATE_CART',
+				payload: {
+					product,
+					total: state.subtotal + product.total,
+				},
+			})
+		} else {
+			dispatch({
+				type: 'ADD_CART',
+				payload: product,
+			})
+		}
+		console.log(product)
+	}
 	return (
 		<ProductsContext.Provider
 			value={{
@@ -59,6 +89,8 @@ export const ProductsProvider: FC<Props> = ({ children }) => {
 				getProductsByUser,
 				createProduct,
 				errorMessage,
+				setSubtotal,
+				shoppingCart,
 			}}
 		>
 			{children}

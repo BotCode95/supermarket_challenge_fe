@@ -11,7 +11,7 @@ import { Client } from '../components/Client/Client'
 export const Home = () => {
 	const { user } = useContext(AuthContext)
 	const { logout } = useContext(AuthContext)
-	const { getProductsByUser } = useContext(ProductsContext)
+	const { subtotal, getProductsByUser } = useContext(ProductsContext)
 
 	useEffect(() => {
 		getProductsByUser(user!._id)
@@ -28,7 +28,7 @@ export const Home = () => {
 			<Grid item xs={4} className="prices_container">
 				<Client />
 				<Divider />
-				<Moneda value={300} title={'Subtotal'} />
+				<Moneda value={subtotal} title={'Subtotal'} />
 				<Divider />
 				<Cupon />
 				<Moneda value={800} title={'Total'} />
